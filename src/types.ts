@@ -4,6 +4,5 @@ export interface Expense {
     category: string;
     current_period_cost_rub: number;
     current_period_cost_idr: number;
-    source_file?: string;
-    [key: string]: string | number | undefined;
+    source_file: string;
 }

@@ -35,6 +35,7 @@ const parseHtml = (html: string): Expense[] => {
             category: category,
             current_period_cost_rub: currentPeriodRub,
             current_period_cost_idr: currentPeriodIdr,
+            source_file: 'default',
         });
     });
 

@@ -1,10 +1,10 @@
 import fs from 'fs';
 import { Expense } from './types';
+import { CSV_HEADERS } from './config';
 
 const arrayToCsv = (arr: Expense[]): string => {
-    const headers = Object.keys(arr[0]);
-    const csv = arr.map(row => headers.map(fieldName => JSON.stringify(row[fieldName])).join(','));
-    csv.unshift(headers.join(','));
+    const csv = arr.map(row => CSV_HEADERS.map(fieldName => JSON.stringify(row[fieldName as keyof Expense])).join(','));
+    csv.unshift(CSV_HEADERS.join(','));
     return csv.join('\r\n');
 };
 
