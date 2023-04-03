@@ -3,8 +3,17 @@ import { Expense } from './types';
 import { CSV_HEADERS } from './config';
 
 const arrayToCsv = (arr: Expense[]): string => {
-    const csv = arr.map(row => CSV_HEADERS.map(fieldName => JSON.stringify(row[fieldName as keyof Expense])).join(','));
-    csv.unshift(CSV_HEADERS.join(','));
+    const csv = arr.map(row =>
+        CSV_HEADERS.map(fieldName => {
+            const value = row[fieldName as keyof Expense];
+            if (typeof value === 'number') {
+                return value.toFixed(2).replace('.', ',');
+            } else {
+                return JSON.stringify(value);
+            }
+        }).join(';')
+    );
+    csv.unshift(CSV_HEADERS.join(';'));
     return csv.join('\r\n');
 };
 
