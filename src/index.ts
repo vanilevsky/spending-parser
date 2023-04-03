@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { FOLDER_PATH, OUTPUT_FILE_PATH } from './config';
+import {COMBINED_CSV, FOLDER_PATH, OUTPUT_FOLDER} from './config';
 import extractExpenses from './extractExpenses';
 import { writeCsv } from './csvUtils';
 import { Expense } from './types';
@@ -19,10 +19,12 @@ const processFiles = async (htmlFiles: string[]): Promise<void> => {
         });
 
         allExpenses = allExpenses.concat(expenses);
+        writeCsv(expenses, `${OUTPUT_FOLDER}/${removeExtensionFromFileName(htmlFile)}.csv`);
     }
 
-    console.log(`Writing combined expenses to ${OUTPUT_FILE_PATH}`);
-    writeCsv(allExpenses, OUTPUT_FILE_PATH);
+    const outputFilePath = `${OUTPUT_FOLDER}/${COMBINED_CSV}`;
+    console.log(`Writing combined expenses to ${outputFilePath}`);
+    writeCsv(allExpenses, outputFilePath);
 };
 
 const removeExtensionFromFileName = (fileName: string): string => {
