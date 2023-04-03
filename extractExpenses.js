@@ -4,8 +4,7 @@ const parseHtml = require('./parseHtml');
 const extractExpenses = async(htmlFilePath) => {
     try {
         const html = fs.readFileSync(htmlFilePath, 'utf8');
-        const expenses = parseHtml(html);
-        return expenses;
+        return parseHtml(html);
     } catch (error) {
         console.error('Error reading HTML file:', error);
     }

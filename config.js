@@ -1,5 +1,5 @@
-const FOLDER_PATH = 'spendings';
-const OUTPUT_FILE_PATH = 'spendings/combined.csv';
+const FOLDER_PATH = 'data';
+const OUTPUT_FILE_PATH = 'data/combined.csv';
 const RUB_TO_IDR_RATE = 175;
 
 module.exports = {

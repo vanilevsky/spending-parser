@@ -14,16 +14,19 @@ const processFiles = async(htmlFiles) => {
 
         const expenses = await extractExpenses(htmlFilePath);
         expenses.forEach(expense => {
-            expense.source_file = htmlFile;
+            expense.source_file = removeExtensionFromFileName(htmlFile);
         });
 
         allExpenses = allExpenses.concat(expenses);
     }
 
     console.log(`Writing combined expenses to ${OUTPUT_FILE_PATH}`);
-    const headers = ['source_file', 'row_type', 'category', 'current_period_cost_rub', 'current_period_cost_idr'];
-    writeCsv(allExpenses, OUTPUT_FILE_PATH, headers);
+    writeCsv(allExpenses, OUTPUT_FILE_PATH);
 };
+
+const removeExtensionFromFileName = function(fileName) {
+    return fileName.replace(/\.[^/.]+$/, "");
+}
 
 fs.readdir(FOLDER_PATH, async(err, files) => {
     if (err) {
