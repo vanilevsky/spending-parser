@@ -1,17 +1,18 @@
-const cheerio = require('cheerio');
-const { RUB_TO_IDR_RATE } = require('./config');
+import cheerio from 'cheerio';
+import { RUB_TO_IDR_RATE } from './config';
+import { Expense } from './types';
 
-const rubToIdr = (rub) => rub * RUB_TO_IDR_RATE;
+const rubToIdr = (rub: number): number => rub * RUB_TO_IDR_RATE;
 
-const parseHtml = (html) => {
+const parseHtml = (html: string): Expense[] => {
     const basicParentCategory = 'Root';
-    const $ = cheerio.load(html);
+    const $: cheerio.Root = cheerio.load(html);
     const rows = $('tr.report-row');
-    const expenses = [];
+    const expenses: Expense[] = [];
 
     let parentCategory = basicParentCategory;
 
-    rows.each((i, row) => {
+    rows.each((i: number, row: cheerio.Element) => {
         const paddingLeft = $(row).find('td.single.line.five.wide').css('padding-left');
 
         const category = $(row).find('.category-name').text().trim();
@@ -40,4 +41,4 @@ const parseHtml = (html) => {
     return expenses;
 };
 
-module.exports = parseHtml;
+export default parseHtml;

@@ -1,11 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const { FOLDER_PATH, OUTPUT_FILE_PATH } = require('./config');
-const extractExpenses = require('./extractExpenses');
-const { writeCsv } = require('./csvUtils');
+import fs from 'fs';
+import path from 'path';
+import { FOLDER_PATH, OUTPUT_FILE_PATH } from './config';
+import extractExpenses from './extractExpenses';
+import { writeCsv } from './csvUtils';
+import { Expense } from './types';
 
-const processFiles = async(htmlFiles) => {
-    let allExpenses = [];
+const processFiles = async (htmlFiles: string[]): Promise<void> => {
+    let allExpenses: Expense[] = [];
 
     for (const htmlFile of htmlFiles) {
         const htmlFilePath = path.join(FOLDER_PATH, htmlFile);
@@ -24,11 +25,11 @@ const processFiles = async(htmlFiles) => {
     writeCsv(allExpenses, OUTPUT_FILE_PATH);
 };
 
-const removeExtensionFromFileName = function(fileName) {
+const removeExtensionFromFileName = (fileName: string): string => {
     return fileName.replace(/\.[^/.]+$/, "");
 }
 
-fs.readdir(FOLDER_PATH, async(err, files) => {
+fs.readdir(FOLDER_PATH, async (err, files) => {
     if (err) {
         console.error('Error reading directory:', err);
         return;
